@@ -7,7 +7,7 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -18,7 +18,9 @@ const dbName = 'passop';
 
 async function startServer() {
     try {
-        const client = new MongoClient(url);
+        const client = new MongoClient(url, {
+            serverSelectionTimeoutMS: 50000 // Increase the timeout to 50 seconds
+          });
         await client.connect();
         console.log('Connected successfully to MongoDB');
 
